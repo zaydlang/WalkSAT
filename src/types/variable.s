@@ -22,10 +22,10 @@
 ; Description: Represents the current variable state in WalkSAT.  
 ;------------------------------------------------------------------------------
 
-.macro VariableStateGetVariable reg, address
-    ldrb \reg, [address]
+.macro VariableStateGetVariable this, reg, index
+    ldrb \reg, [address, index]
 .endm
 
-.macro VariableGetVal reg, address
-    ldrb \reg, [address, #1]
+.macro VariableStateSetVariable this, reg, index
+    strb \reg, [address, index]
 .endm
