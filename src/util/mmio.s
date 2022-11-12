@@ -1,1 +1,0 @@
-.define DISPCNT 0x04000000
