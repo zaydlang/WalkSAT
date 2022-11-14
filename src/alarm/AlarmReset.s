@@ -1,12 +1,13 @@
 .ifndef AlarmReset
+
+.include "../src/alarm/alarm_fired.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global AlarmReset
 .type   AlarmReset, STT_FUNC
-
-.include "../src/alarm/alarm_fired.s"
 
 @------------------------------------------------------------------------------
 @ void AlarmReset(void)
@@ -29,7 +30,7 @@ AlarmReset:
     ldr r1, =0x83C000
     str r1, [r0], #4
 
-    ldr r1, =0xC4FF9C
+    ldr r1, =0xC4FFF6
     str r1, [r0]
 
     bx lr

@@ -1,4 +1,5 @@
 .ifndef rand_lfsr
+
 .cpu arm7tdmi
 .section .iwram, "ax", %progbits
 .arm

@@ -1,12 +1,13 @@
 .ifndef GetRandomNumber
+
+.include "../src/random/rand_lfsr.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global GetRandomNumber
 .type   GetRandomNumber, STT_FUNC
-
-.include "../src/random/rand_lfsr.s"
 
 @------------------------------------------------------------------------------
 @ void GetRandomNumber()

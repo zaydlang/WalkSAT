@@ -1,12 +1,13 @@
 .ifndef InitRandom
+
+.include "../src/random/rand_lfsr.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global InitRandom
 .type   InitRandom, STT_FUNC
-
-.include "../src/random/rand_lfsr.s"
 
 @------------------------------------------------------------------------------
 @ void InitRandom()

@@ -1,4 +1,5 @@
 .ifndef StopCPU
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm

@@ -1,15 +1,16 @@
 .ifndef GenerateRandomClause
+
+.include "../inc/types/clause.inc"
+.include "../inc/types/state.inc"
+.include "../inc/types/variable.inc"
+.include "../src/random/GetRandomNumberRanged.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global GenerateRandomClause
 .type   GenerateRandomClause, STT_FUNC
-
-.include "../inc/types/clause.inc"
-.include "../inc/types/state.inc"
-.include "../inc/types/variable.inc"
-.include "../src/random/GetRandomNumberRanged.s"
 
 @------------------------------------------------------------------------------
 @ void GenerateRandomClause(Clause this, u32 upper_bound)

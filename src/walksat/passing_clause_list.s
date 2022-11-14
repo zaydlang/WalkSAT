@@ -1,4 +1,5 @@
 .ifndef passing_clause_list
+
 .cpu arm7tdmi
 .section .iwram, "ax", %progbits
 .arm

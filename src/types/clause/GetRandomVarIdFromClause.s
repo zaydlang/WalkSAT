@@ -1,15 +1,16 @@
 .ifndef GetRandomVarIdFromClause
+
+.include "../inc/types/clause.inc"
+.include "../inc/types/state.inc"
+.include "../inc/types/variable.inc"
+.include "../src/random/GetRandomNumberRanged.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global GetRandomVarIdFromClause
 .type   GetRandomVarIdFromClause, STT_FUNC
-
-.include "../inc/types/clause.inc"
-.include "../inc/types/state.inc"
-.include "../inc/types/variable.inc"
-.include "../src/random/GetRandomNumberRanged.s"
 
 @------------------------------------------------------------------------------
 @ VariableId GetRandomVarIdFromClause()

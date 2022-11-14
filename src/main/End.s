@@ -1,28 +1,33 @@
-.ifndef DidAlarmFire
+.ifndef End
+
+.include "../src/cpu/DisableInterrupts.s"
+.include "../src/cpu/StopCPU.s"
 
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
-.global DidAlarmFire
-.type   DidAlarmFire, STT_FUNC
+.global End
+.type   End, STT_FUNC
 
 @------------------------------------------------------------------------------
-@ bool DidAlarmFire(void)
+@ __attribute__((__noreturn__))
+@ void End(void)
 @------------------------------------------------------------------------------
-@ Description: Returns whether or not the alarm has fired or not
+@ Description: The end of the program. Shuts down execution. Does not return.
 @------------------------------------------------------------------------------
 @ Parameters:
 @ None.
 @------------------------------------------------------------------------------
 @ Returns:
-@ None.
+@ No return.
 @------------------------------------------------------------------------------
 
-DidAlarmFire:
-    ldr r0, =alarm_fired
-    ldr r0, [r0]
-    bx lr
+End:
+    bl DisableInterrupts
+    bl StopCPU
 
-.size DidAlarmFire, .-DidAlarmFire
+    b End  @ Should never get here, but just in case, let's loop back to End
+
+.size ArrayMedian, .-ArrayMedian
 .endif

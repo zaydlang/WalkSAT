@@ -1,4 +1,5 @@
 .ifndef DisableInterrupts
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm

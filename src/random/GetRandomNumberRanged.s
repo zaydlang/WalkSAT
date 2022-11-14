@@ -1,12 +1,13 @@
 .ifndef GetRandomNumberRanged
+
+.include "../src/random/GetRandomNumber.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global GetRandomNumberRanged
 .type   GetRandomNumberRanged, STT_FUNC
-
-.include "../src/random/GetRandomNumber.s"
 
 @------------------------------------------------------------------------------
 @ void GetRandomNumberRanged()

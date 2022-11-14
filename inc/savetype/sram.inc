@@ -1,0 +1,17 @@
+.ifndef __SRAM_INC__
+__SRAM_INC__:
+
+@ SRAM_V123
+.byte 0x53
+.byte 0x52
+.byte 0x41
+.byte 0x4d
+.byte 0x5f
+.byte 0x56
+.byte 0x31
+.byte 0x32
+.byte 0x33
+.byte 0x00
+.space 2
+
+.endif

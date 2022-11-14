@@ -1,28 +1,37 @@
-.ifndef DidAlarmFire
+.ifndef ArrayMax
 
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
-.global DidAlarmFire
-.type   DidAlarmFire, STT_FUNC
+.global ArrayMax
+.type   ArrayMax, STT_FUNC
 
 @------------------------------------------------------------------------------
-@ bool DidAlarmFire(void)
+@ u32 ArrayMax(u32 *array, size_t length)
 @------------------------------------------------------------------------------
-@ Description: Returns whether or not the alarm has fired or not
+@ Description: Returns the maximum element of the array.
 @------------------------------------------------------------------------------
 @ Parameters:
-@ None.
+@ r0 = Pointer to the array
+@ r1 = The length of the array
 @------------------------------------------------------------------------------
 @ Returns:
-@ None.
+@ The length of the array
 @------------------------------------------------------------------------------
 
-DidAlarmFire:
-    ldr r0, =alarm_fired
-    ldr r0, [r0]
+ArrayMax:
+    mov r2, #0
+
+    ArrayMax_Loop:
+        ldr r3, [r0, r1, lsl #2]
+        cmp r3, r2
+        movgt r2, r3
+        subs r1, #1
+        bne ArrayMax_Loop
+    
+    mov r0, r2
     bx lr
 
-.size DidAlarmFire, .-DidAlarmFire
+.size ArrayMax, .-ArrayMax
 .endif

@@ -1,28 +1,37 @@
-.ifndef DidAlarmFire
+.ifndef Memcpy8
+
+.include "../src/random/rand_lfsr.s"
 
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
-.global DidAlarmFire
-.type   DidAlarmFire, STT_FUNC
+.global Memcpy8
+.type   Memcpy8, STT_FUNC
 
 @------------------------------------------------------------------------------
-@ bool DidAlarmFire(void)
+@ void Memcpy8(void* dst, void* src, size_t len)
 @------------------------------------------------------------------------------
-@ Description: Returns whether or not the alarm has fired or not
+@ Description: Memcpys a chunk of data by bytes
 @------------------------------------------------------------------------------
 @ Parameters:
-@ None.
+@ r0 = The pointer to dst
+@ r1 = The pointer to src
+@ r2 = The length to memcpy
 @------------------------------------------------------------------------------
 @ Returns:
-@ None.
+@ Nothing.
 @------------------------------------------------------------------------------
 
-DidAlarmFire:
-    ldr r0, =alarm_fired
-    ldr r0, [r0]
+Memcpy8:
+    Memcpy8_Loop:
+        ldrb r3, [r1, r2]
+        strb r3, [r0, r2]
+
+        subs r2, #1
+        bne Memcpy8_Loop
+    
     bx lr
 
-.size DidAlarmFire, .-DidAlarmFire
+.size Memcpy8, .-Memcpy8
 .endif

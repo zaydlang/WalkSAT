@@ -1,13 +1,14 @@
 .ifndef AlarmInit
+
+.include "../inc/util/irq.inc"
+.include "../src/alarm/AlarmIRQHandler.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global AlarmInit
 .type   AlarmInit, STT_FUNC
-
-.include "../inc/util/irq.inc"
-.include "../src/alarm/AlarmIRQHandler.s"
 
 @------------------------------------------------------------------------------
 @ void AlarmInit(void)

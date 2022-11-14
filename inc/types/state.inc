@@ -1,8 +1,6 @@
 .ifndef __STATE_INC__
 __STATE_INC__:
 
-.section .iwram,"ax",%progbits
-
 @------------------------------------------------------------------------------
 @ struct State {
 @     bool variables[256] : u8

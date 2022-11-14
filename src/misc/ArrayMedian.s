@@ -1,12 +1,13 @@
 .ifndef ArrayMedian
+
+.include "../src/misc/BubbleSort.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global ArrayMedian
 .type   ArrayMedian, STT_FUNC
-
-.include "../src/misc/BubbleSort.s"
 
 @------------------------------------------------------------------------------
 @ void ArrayMedian(u32 *array)

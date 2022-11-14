@@ -1,15 +1,16 @@
 .ifndef EvaluateClause
+
+.include "../inc/types/clause.inc"
+.include "../inc/types/state.inc"
+.include "../inc/types/variable.inc"
+.include "../src/random/GetRandomNumberRanged.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global EvaluateClause
 .type   EvaluateClause, STT_FUNC
-
-.include "../inc/types/clause.inc"
-.include "../inc/types/state.inc"
-.include "../inc/types/variable.inc"
-.include "../src/random/GetRandomNumberRanged.s"
 
 @------------------------------------------------------------------------------
 @ bool EvaluateClause(Clause *this, State *state)

@@ -1,15 +1,16 @@
 .ifndef WalkSatIterateOnce
+
+.include "../inc/types/variable.inc"
+.include "../src/types/clause/EvaluateClause.s"
+.include "../src/types/clause/GetRandomVarIdFromClause.s"
+.include "../src/walksat/passing_clause_list.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global WalkSatIterateOnce
 .type   WalkSatIterateOnce, STT_FUNC
-
-.include "../inc/types/variable.inc"
-.include "../src/types/clause/EvaluateClause.s"
-.include "../src/types/clause/GetRandomVarIdFromClause.s"
-.include "../src/walksat/passing_clause_list.s"
 
 @------------------------------------------------------------------------------
 @ void WalkSatIterateOnce(Clause *clauses, int number_of_clauses, State *state)

@@ -1,13 +1,14 @@
 .ifndef WalkSatGenerateRandomInstance
+
+.include "../inc/types/clause.inc"
+.include "../src/types/clause/GenerateRandomClause.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global WalkSatGenerateRandomInstance
 .type   WalkSatGenerateRandomInstance, STT_FUNC
-
-.include "../inc/types/clause.inc"
-.include "../src/types/clause/GenerateRandomClause.s"
 
 @------------------------------------------------------------------------------
 @ void WalkSatGenerateRandomInstance(Clause *clauses, u32 upper_bound,

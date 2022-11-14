@@ -1,13 +1,14 @@
 .ifndef StateInit
+
+.include "../inc/types/state.inc"
+.include "../src/random/GetRandomNumberRanged.s"
+
 .cpu arm7tdmi
 .section .iwram, "ax"
 .arm
 .align 2
 .global StateInit
 .type   StateInit, STT_FUNC
-
-.include "../inc/types/state.inc"
-.include "../src/random/GetRandomNumberRanged.s"
 
 @------------------------------------------------------------------------------
 @ void StateInit(State *this, size_t num_variables)

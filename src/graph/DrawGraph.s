@@ -1,0 +1,97 @@
+.ifndef DrawGraph
+
+.include "../inc/util/memory.inc"
+.include "../src/display/DrawPoint.s"
+.include "../src/graph/DrawGraphAxes.s"
+.include "../src/misc/ArrayMax.s"
+
+.cpu arm7tdmi
+.section .iwram, "ax"
+.arm
+.align 2
+.global DrawGraph
+.type   DrawGraph, STT_FUNC
+
+@------------------------------------------------------------------------------
+@ void DrawGraph(void *graph_data, int page, int color_indes)
+@------------------------------------------------------------------------------
+@ Description: Draws the graph on a given page. The graph must have ten entries
+@ in it, and the data must range from 0 to max. The format of graph_data is an
+@ array of ten entries, each of which is a number from 0 to max.
+@------------------------------------------------------------------------------
+@ Parameters:
+@ r0 = Pointer to the graph data
+@ r1 = The page to draw on. Either 0 or 1.
+@ r2 = The color index to use for the graph
+@ r3 = The color index to use for the axes
+@------------------------------------------------------------------------------
+@ Returns:
+@ None
+@------------------------------------------------------------------------------
+
+DrawGraph:
+    push {r4 - r10, lr}
+
+    mov r10, r1
+
+    push {r0 - r3}
+    mov r0, r1
+    mov r1, r3
+    bl DrawGraphAxes
+    pop {r0 - r3}
+
+    push {r0 - r2}
+    mov r1, #10
+    bl ArrayMax
+    mov r9, r0
+    pop {r0 - r2}
+
+    @ Load the base address of the graph into r4
+    ldr r4, =MEM_VRAM
+    mov r3, #0xA000
+    mul r1, r3
+    add r4, r1
+
+    @ Save r0 and r2 into callee saved registers
+    mov r5, r0
+    mov r6, r2
+
+    mov r7, #9
+    DrawGraph_EntryLoop:
+        ldr r1, [r5, r7, lsl #2]
+        mov r0, #150
+        mul r1, r0
+        
+        push {r0, r2, r3}
+        mov r0, r1
+        mov r1, r9
+        swi #0x60000
+        mov r1, #130
+        sub r1, r0
+        add r1, #15
+        pop {r0, r2, r3}
+        
+        mov r0, r7
+        mov r2, r6
+        
+        mov r8, #21
+        mul r0, r8
+        add r0, #15
+        mov r8, #23
+        DrawGraph_RowLoop:
+            push {r0}
+            mov r3, r10
+            bl DrawPoint
+            pop {r0}
+
+            add r0, #1
+            subs r8, #1
+            bge DrawGraph_RowLoop
+
+        subs r7, #1
+        bge DrawGraph_EntryLoop
+    
+    pop {r4 - r10, pc}
+
+.size DrawGraph, .-DrawGraph
+.endif
