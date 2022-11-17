@@ -24,13 +24,20 @@
 @ r1 = The page to draw on. Either 0 or 1.
 @ r2 = The color index to use for the graph
 @ r3 = The color index to use for the axes
+@ r4 = The color index to use for the individual points
 @------------------------------------------------------------------------------
 @ Returns:
 @ None
 @------------------------------------------------------------------------------
 
 DrawGraph:
-    push {r4 - r10, lr}
+    @ this is probably the most inefficient, most unreadable, messy function in
+    @ the entire codebase... ugh
+
+    push {r4 - r12, lr}
+
+    ldr r5, =DrawGraph_spillage
+    str r4, [r5]
 
     mov r10, r1
 
@@ -56,19 +63,19 @@ DrawGraph:
     mov r5, r0
     mov r6, r2
 
-    mov r7, #9
+    mov r7, #8
     DrawGraph_EntryLoop:
         ldr r1, [r5, r7, lsl #2]
-        mov r0, #150
-        mul r1, r0
+        @ mov r0, #150
+        @ mul r1, r0
         
         push {r0, r2, r3}
-        mov r0, r1
-        mov r1, r9
-        swi #0x60000
-        mov r1, #130
-        sub r1, r0
-        add r1, #15
+        @ mov r0, r1
+        @ mov r1, r9
+        @ swi #0x60000
+        @ mov r1, #130
+        @ sub r1, r0
+        @ add r1, #15
         pop {r0, r2, r3}
         
         mov r0, r7
@@ -77,21 +84,90 @@ DrawGraph:
         mov r8, #21
         mul r0, r8
         add r0, #15
-        mov r8, #23
+        mov r8, #21
+
+        add r11, r7, #1
+        ldr r11, [r5, r11, lsl #2]
+        sub r11, r1
+
+        push {r7, r9}
+        mov r7, r9
+        mov r9, r0
         DrawGraph_RowLoop:
             push {r0}
+
+            sub r12, r0, r9
+
+            mul r12, r11, r12
+            @ the stack hates me
+            push {r0 - r3}
+            mov r0, r12
+            mov r1, #21
+            swi #0x60000
+            mov r12, r0
+            pop {r0 - r3}
+            push {r1}
+            add r1, r12
             mov r3, r10
+            push {r0 - r3}
+                push {r0, r2, r3}
+                mov r0, #130
+                mul r1, r0
+        
+                mov r0, r1
+                mov r1, r7
+                swi #0x60000
+                mov r1, #130
+                sub r1, r0
+                add r1, #15
+                pop {r0, r2, r3}
+            push {r0 - r3}
             bl DrawPoint
+            pop {r0 - r3}
+            cmp r8, #0
+            bgt DrawGraph_StarDone
+
+            DrawGraph_Star:
+                ldr r2, =DrawGraph_spillage
+                ldr r2, [r2]
+                push {r0 - r3}
+                bl DrawPoint
+                pop {r0 - r3}
+                add r0, #1
+                push {r0 - r3}
+                bl DrawPoint
+                pop {r0 - r3}
+                sub r0, #2
+                push {r0 - r3}
+                bl DrawPoint
+                pop {r0 - r3}
+                add r0, #1
+                add r1, #1
+                push {r0 - r3}
+                bl DrawPoint
+                pop {r0 - r3}
+                sub r1, #2
+                push {r0 - r3}
+                bl DrawPoint
+                pop {r0 - r3}
+            DrawGraph_StarDone:
+
+            pop {r0 - r3}
+            pop {r1}
             pop {r0}
 
             add r0, #1
             subs r8, #1
             bge DrawGraph_RowLoop
+        pop {r7, r9}
 
         subs r7, #1
         bge DrawGraph_EntryLoop
     
-    pop {r4 - r10, pc}
+    pop {r4 - r12, pc}
+
+DrawGraph_spillage:
+.space 4
 
 .size DrawGraph, .-DrawGraph
 .endif

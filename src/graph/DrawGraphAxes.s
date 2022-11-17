@@ -44,7 +44,6 @@ DrawGraphAxes:
 
     mov r4, #14 @ x
     mov r5, #146 @ y
-    mov r6, r1
 
     DrawGraphAxes_XAxisLoop:
         mov r0, r4

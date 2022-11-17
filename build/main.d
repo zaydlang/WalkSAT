@@ -1,1 +1,1 @@
-main.o: /Users/zaydqumsieh/Documents/WalkSAT/src/main.s
+main.o: /home/zaydq/Documents/WalkSAT/src/main.s

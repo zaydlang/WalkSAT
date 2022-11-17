@@ -31,17 +31,19 @@ DisplayInit:
     # load address of palette ram
     ldr r0, =#0x05000000
 
-    # white and black
-    ldr r1, =#0x00007FFF
-    strh r1, [r0], #4
+    add r0, #4
 
     # green and red
     ldr r1, =#0x4FEC319F
     str r1, [r0], #4
 
-    # gray
-    ldr r1, =0x00005294
+    # gold
+    ldr r1, =0x0000035F
     str r1, [r0], #4
+
+    # white and black
+    ldr r1, =#0x00007FFF
+    strh r1, [r0], #4
 
     pop {r4}
     bx lr

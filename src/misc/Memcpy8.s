@@ -24,12 +24,14 @@
 @------------------------------------------------------------------------------
 
 Memcpy8:
+    sub r2, #1
+
     Memcpy8_Loop:
         ldrb r3, [r1, r2]
         strb r3, [r0, r2]
 
         subs r2, #1
-        bne Memcpy8_Loop
+        bge Memcpy8_Loop
     
     bx lr
 

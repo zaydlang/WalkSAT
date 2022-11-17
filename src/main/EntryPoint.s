@@ -140,7 +140,8 @@ EntryPoint:
         ldr r0, =0x02004000
         mov r1, #0
         mov r2, #3
-        mov r3, #1
+        mov r3, #6
+        mov r4, #4
         bl DrawGraph
 
         ldr r0, =0x02004000
@@ -151,7 +152,8 @@ EntryPoint:
         ldr r0, =0x02004000
         mov r1, #1
         mov r2, #2
-        mov r3, #1
+        mov r3, #6
+        mov r4, #4
         bl DrawGraph
 
     CycleGraphsLoop:
